@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="quizPage">
+    <div id="quizContainer">
+        <h1>Personality Quiz</h1>
+        <div id="questionContainer"></div>
+        <div id="answersContainer"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "If you had to pick a way to get around, what would it be?",
+                answers: [
+                    { text: "Spaceship", personality: 'A' },
+                    { text: "Zoo animal", personality: 'D' },
+                    { text: "Helicopter", personality: 'E' },
+                    { text: "Jetpack", personality: 'L' }
+                ]
+            },
+            {
+                question: "What kind of music do you enjoy?",
+                answers: [
+                    { text: "Rock", personality: 'A' },
+                    { text: "Indie", personality: 'E' },
+                    { text: "Classical", personality: 'D' },
+                    { text: "Pop", personality: 'L' }
+                ]
+            },
+            {
+                question: "If your soul were a color, what would it be?",
+                answers: [
+                    { text: "Emerald Green", personality: 'A' },
+                    { text: "Lavender", personality: 'D' },
+                    { text: "Midnight Blue", personality: 'E' },
+                    { text: "Gold", personality: 'L' }
+                ]
+            },
+            {
+                question: "If you could live in any fictional world, where would it be?",
+                answers: [
+                    { text: "Middle-Earth", personality: 'A' },
+                    { text: "Neverland", personality: 'D' },
+                    { text: "A galaxy far, far away", personality: 'E' },
+                    { text: "A city that never sleeps", personality: 'L' }
+                ]
+            },
+            {
+                question: "What would you do if you found a hidden door in your house?",
+                answers: [
+                    { text: "Open it without hesitation", personality: 'A' },
+                    { text: "Sit and wonder what’s inside for hours", personality: 'D' },
+                    { text: "Call a friend to explore it with me", personality: 'E' },
+                    { text: "Study the door before opening it", personality: 'L' }
+                ]
+            },
+            {
+                question: "What do you think the moon smells like?",
+                answers: [
+                    { text: "Freshly baked cookies", personality: 'A' },
+                    { text: "A distant dream", personality: 'D' },
+                    { text: "Adventure and discovery", personality: 'E' },
+                    { text: "Victory and strength", personality: 'L' }
+                ]
+            },
+            {
+                question: "If you could talk to animals, what would be your first question?",
+                answers: [
+                    { text: "How do you see the world?", personality: 'A' },
+                    { text: "What dreams do you have?", personality: 'D' },
+                    { text: "Where do you go when no one's watching?", personality: 'E' },
+                    { text: "How do you lead your pack?", personality: 'L' }
+                ]
+            },
+            {
+                question: "If you could turn into any mythical creature, what would it be?",
+                answers: [
+                    { text: "Dragon", personality: 'A' },
+                    { text: "Unicorn", personality: 'D' },
+                    { text: "Phoenix", personality: 'E' },
+                    { text: "Griffin", personality: 'L' }
+                ]
+            },
+            {
+                question: "If you were a type of weather, what would you be?",
+                answers: [
+                    { text: "Thunderstorm", personality: 'A' },
+                    { text: "Gentle breeze", personality: 'D' },
+                    { text: "Morning mist", personality: 'E' },
+                    { text: "Blazing sun", personality: 'L' }
+                ]
+            },
+            {
+                question: "Which word best describes the vibe of your dream home?",
+                answers: [
+                    { text: "Wanderlust", personality: 'A' },
+                    { text: "Ethereal", personality: 'D' },
+                    { text: "Endless adventure", personality: 'E' },
+                    { text: "Commanding", personality: 'L' }
+                ]
+            },
+            {
+                question: "If your personality were an element, what would it be?",
+                answers: [
+                    { text: "Fire", personality: 'A' },
+                    { text: "Air", personality: 'D' },
+                    { text: "Water", personality: 'E' },
+                    { text: "Earth", personality: 'L' }
+                ]
+            }
+        ];
+
+        let answersCount = { A: 0, D: 0, E: 0, L: 0 };
+        let currentQuestion = 0;
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                const question = questions[currentQuestion];
+                document.getElementById('questionContainer').innerHTML = `<h2>${question.question}</h2>`;
+                let answersHTML = '';
+                question.answers.forEach(answer => {
+                    answersHTML += `<button onclick="handleAnswer('${answer.personality}')">${answer.text}</button>`;
+                });
+                document.getElementById('answersContainer').innerHTML = answersHTML;
+            } else {
+                const mostSelectedPersonality = getMostSelectedPersonality();
+                window.location.href = `results.html?personality=${mostSelectedPersonality}`;
+            }
+        }
+
+        function handleAnswer(personality) {
+            answersCount[personality]++;
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function getMostSelectedPersonality() {
+            const maxCount = Math.max(...Object.values(answersCount));
+            for (let personality in answersCount) {
+                if (answersCount[personality] === maxCount) {
+                    return personality;
+                }
+            }
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
